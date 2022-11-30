@@ -35,8 +35,11 @@
   // Classes
 
   .#{$styleKey}#{$subStyleSelector} {
-    &.fill {
-      @include classes($lightValue, $darkValue, background, $mode);
+    @if $styleKey != label {
+      // Label style should never be used as a background
+      &.fill {
+        @include classes($lightValue, $darkValue, background, $mode);
+      }
     }
     &.stroke {
       @include classes($lightValue, $darkValue, color, $mode);
