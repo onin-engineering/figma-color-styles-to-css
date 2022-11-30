@@ -1,0 +1,99 @@
+@import "../library/styles.tokens.json";
+
+// Functions
+
+@function getValue($styleKey, $mode) {
+  @return map-get(map-get($styleKey, $mode), value);
+}
+
+@function isStyleWithMode($styleKey, $mode) {
+  @return map-has-key($styleKey, $mode);
+}
+
+@mixin styles($styleKey, $style, $mode, $subStyleSelector: "") {
+  $lightValue: getValue($style, light);
+  $darkValue: getValue($style, dark);
+
+  // Elements
+
+  @if $styleKey == label and $subStyleSelector == -primary {
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      @include classes($lightValue, $darkValue, color, $mode);
+    }
+  }
+
+  @if $styleKey == link {
+    a {
+      @include classes($lightValue, $darkValue, color, $mode);
+    }
+  }
+
+  // Classes
+
+  .#{$styleKey}#{$subStyleSelector} {
+    &.fill {
+      @include classes($lightValue, $darkValue, background, $mode);
+    }
+    &.stroke {
+      @include classes($lightValue, $darkValue, color, $mode);
+    }
+  }
+}
+
+@mixin classes($lightValue, $darkValue, $attribute, $mode) {
+  @if $mode == light {
+    &,
+    &.light {
+      @include attributes($lightValue, $attribute);
+    }
+    &.dark {
+      @include attributes($darkValue, $attribute);
+    }
+  } @else {
+    @include attributes($darkValue, $attribute);
+  }
+}
+
+@mixin attributes($value, $attribute) {
+  #{$attribute}: $value;
+  path[fill] {
+    fill: $value;
+  }
+  path[stroke] {
+    stroke: $value;
+  }
+}
+
+@mixin modeStyles($styleKey, $mode) {
+  $style: map-get($color, $styleKey);
+
+  @if isStyleWithMode($style, $mode) {
+    @include styles($styleKey, $style, $mode);
+  } @else {
+    @each $subStyleKey in map-keys(map-get($color, $styleKey)) {
+      $subStyle: map-get(map-get($color, $styleKey), $subStyleKey);
+
+      @if isStyleWithMode($subStyle, $mode) {
+        @include styles($styleKey, $subStyle, $mode, ".#{$subStyleKey}");
+      }
+    }
+  }
+}
+
+// Base & Light
+
+@each $styleKey in map-keys($color) {
+  @include modeStyles($styleKey, light);
+}
+
+// Dark only
+
+@media (prefers-color-scheme: dark) {
+  @each $styleKey in map-keys($color) {
+    @include modeStyles($styleKey, dark);
+  }
+}
