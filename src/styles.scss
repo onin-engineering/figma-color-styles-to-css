@@ -63,12 +63,10 @@
 
 @mixin attributes($value, $attribute) {
   #{$attribute}: $value;
-  > svg > path[fill],
-  > svg > g > path[fill] {
+  > svg path[fill] {
     fill: $value;
   }
-  > svg > path[stroke],
-  svg > g > path[stroke] {
+  > svg path[stroke] {
     stroke: $value;
   }
 }
