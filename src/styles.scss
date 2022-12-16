@@ -35,43 +35,46 @@
 
   // Classes
 
-  .#{$styleKey}#{$subStyleSelector}.fill:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.fill {
     @include attributes($value, background);
   }
-  .#{$styleKey}#{$subStyleSelector}.fill.light:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.fill.light {
     @include attributes($lightValue, background);
   }
-  .#{$styleKey}#{$subStyleSelector}.fill.dark:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.fill.dark {
     @include attributes($darkValue, background);
   }
 
-  .#{$styleKey}#{$subStyleSelector}.stroke:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.stroke {
     @include attributes($value, color);
   }
-  .#{$styleKey}#{$subStyleSelector}.stroke.light:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.stroke.light {
     @include attributes($lightValue, color);
   }
-  .#{$styleKey}#{$subStyleSelector}.stroke.dark:not(> svg) {
+  .#{$styleKey}#{$subStyleSelector}.stroke.dark {
     @include attributes($darkValue, color);
   }
 
-  .#{$styleKey}#{$subStyleSelector}.fill {
+  .#{$styleKey}#{$subStyleSelector}.fill:has(> svg) {
+    background: transparent;
     @include attributes($value, background, true);
   }
-  .#{$styleKey}#{$subStyleSelector}.fill.light {
+  .#{$styleKey}#{$subStyleSelector}.fill.light:has(> svg) {
+    background: transparent;
     @include attributes($lightValue, background, true);
   }
-  .#{$styleKey}#{$subStyleSelector}.fill.dark {
+  .#{$styleKey}#{$subStyleSelector}.fill.dark:has(> svg) {
+    background: transparent;
     @include attributes($darkValue, background, true);
   }
 
-  .#{$styleKey}#{$subStyleSelector}.stroke {
+  .#{$styleKey}#{$subStyleSelector}.stroke:has(> svg) {
     @include attributes($value, color, true);
   }
-  .#{$styleKey}#{$subStyleSelector}.stroke.light {
+  .#{$styleKey}#{$subStyleSelector}.stroke.light:has(> svg) {
     @include attributes($lightValue, color, true);
   }
-  .#{$styleKey}#{$subStyleSelector}.stroke.dark {
+  .#{$styleKey}#{$subStyleSelector}.stroke.dark:has(> svg) {
     @include attributes($darkValue, color, true);
   }
 }
@@ -94,15 +97,15 @@
   @if $isSvg == true {
     @if $attribute == background {
       > svg path[fill] {
-        fill: $value;
+        fill: #{$value};
       }
     } @else {
       > svg path[stroke] {
-        stroke: $value;
+        stroke: #{$value};
       }
     }
   } @else {
-    #{$attribute}: $value;
+    #{$attribute}: #{$value};
   }
 }
 
