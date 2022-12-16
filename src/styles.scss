@@ -34,13 +34,12 @@
 
   // Classes
 
-  .#{$styleKey}#{$subStyleSelector} {
-    &.fill {
-      @include classes($lightValue, $darkValue, background, $mode);
-    }
-    &.stroke {
-      @include classes($lightValue, $darkValue, color, $mode);
-    }
+  div.#{$styleKey}#{$subStyleSelector}.fill {
+    @include classes($lightValue, $darkValue, background, $mode);
+  }
+
+  .#{$styleKey}#{$subStyleSelector}.stroke {
+    @include classes($lightValue, $darkValue, color, $mode);
   }
 }
 
@@ -60,10 +59,10 @@
 
 @mixin attributes($value, $attribute) {
   #{$attribute}: $value;
-  > svg path[fill] {
+  > path[fill] {
     fill: $value;
   }
-  > svg path[stroke] {
+  > path[stroke] {
     stroke: $value;
   }
 }
