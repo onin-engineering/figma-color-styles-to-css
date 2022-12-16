@@ -34,13 +34,11 @@
 
   // Classes
 
-  .#{$styleKey}#{$subStyleSelector}:not(> svg) {
-    &.fill {
-      @include classes($lightValue, $darkValue, background, $mode);
-    }
-    &.stroke {
-      @include classes($lightValue, $darkValue, color, $mode);
-    }
+  .#{$styleKey}#{$subStyleSelector}.fill:not(> svg) {
+    @include classes($lightValue, $darkValue, background, $mode);
+  }
+  .#{$styleKey}#{$subStyleSelector}.stroke:not(> svg) {
+    @include classes($lightValue, $darkValue, color, $mode);
   }
 
   .#{$styleKey}#{$subStyleSelector} {
