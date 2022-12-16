@@ -11,6 +11,7 @@
 }
 
 @mixin styles($styleKey, $style, $mode, $subStyleSelector: "") {
+  $value: getValue($style, $mode);
   $lightValue: getValue($style, light);
   $darkValue: getValue($style, dark);
 
@@ -35,19 +36,43 @@
   // Classes
 
   .#{$styleKey}#{$subStyleSelector}.fill:not(> svg) {
-    @include classes($lightValue, $darkValue, background, $mode);
+    @include attributes($value, background);
   }
-  .#{$styleKey}#{$subStyleSelector}.stroke:not(> svg) {
-    @include classes($lightValue, $darkValue, color, $mode);
+  .#{$styleKey}#{$subStyleSelector}.fill.light:not(> svg) {
+    @include attributes($lightValue, background);
+  }
+  .#{$styleKey}#{$subStyleSelector}.fill.dark:not(> svg) {
+    @include attributes($darkValue, background);
   }
 
-  .#{$styleKey}#{$subStyleSelector} {
-    &.fill {
-      @include classes($lightValue, $darkValue, background, $mode, true);
-    }
-    &.stroke {
-      @include classes($lightValue, $darkValue, color, $mode, true);
-    }
+  .#{$styleKey}#{$subStyleSelector}.stroke:not(> svg) {
+    @include attributes($value, color);
+  }
+  .#{$styleKey}#{$subStyleSelector}.stroke.light:not(> svg) {
+    @include attributes($lightValue, color);
+  }
+  .#{$styleKey}#{$subStyleSelector}.stroke.dark:not(> svg) {
+    @include attributes($darkValue, color);
+  }
+
+  .#{$styleKey}#{$subStyleSelector}.fill {
+    @include attributes($value, background, true);
+  }
+  .#{$styleKey}#{$subStyleSelector}.fill.light {
+    @include attributes($lightValue, background, true);
+  }
+  .#{$styleKey}#{$subStyleSelector}.fill.dark {
+    @include attributes($darkValue, background, true);
+  }
+
+  .#{$styleKey}#{$subStyleSelector}.stroke {
+    @include attributes($value, color, true);
+  }
+  .#{$styleKey}#{$subStyleSelector}.stroke.light {
+    @include attributes($lightValue, color, true);
+  }
+  .#{$styleKey}#{$subStyleSelector}.stroke.dark {
+    @include attributes($darkValue, color, true);
   }
 }
 
